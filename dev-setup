@@ -1,0 +1,16 @@
+#! /bin/bash
+
+echo Install required AWS runtime
+
+rustup target add x86_64-unknown-linux-musl
+
+brew install filosottile/musl-cross/musl-cross
+
+mkdir -p .cargo
+echo '[target.x86_64-unknown-linux-musl]
+linker = "x86_64-linux-musl-gcc"' > .cargo/config
+
+if [ ! -f /usr/local/bin/musl-gcc ]; then
+   ln -s /usr/local/bin/x86_64-linux-musl-gcc /usr/local/bin/musl-gcc
+fi
+
